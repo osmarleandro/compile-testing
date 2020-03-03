@@ -22,8 +22,6 @@ import java.lang.reflect.Method;
 import java.nio.file.Path;
 import java.util.Collection;
 import javax.tools.ForwardingJavaFileManager;
-import javax.tools.JavaFileManager;
-import javax.tools.JavaFileManager.Location;
 import javax.tools.JavaFileObject;
 import javax.tools.StandardJavaFileManager;
 
@@ -87,14 +85,11 @@ public class ForwardingStandardJavaFileManager
       // JDK < 9
       return;
     }
-    extracted(location, searchpath, setLocationFromPaths);
-  }
-
-  private void extracted(Location location, Collection<? extends Path> searchpath, Method setLocationFromPaths) {
     try {
       setLocationFromPaths.invoke(fileManager, location, searchpath);
     } catch (ReflectiveOperationException e) {
       throw new LinkageError(e.getMessage(), e);
     }
   }
+
 }
