@@ -32,7 +32,6 @@ import javax.annotation.Nullable;
  * @author Stephen Pratt
  */
 final class TreeDifference {
-  private static final String NO_LINE = "[unavailable]";
 
   private final ImmutableList<OneWayDiff> extraExpectedNodes;
   private final ImmutableList<OneWayDiff> extraActualNodes;
@@ -127,7 +126,7 @@ final class TreeDifference {
     long startLine = (treeContext == null)
         ? NOPOS : treeContext.getNodeStartLine(nodePath.getLeaf());
     String contextStr = String.format("Line %s %s",
-        (startLine == NOPOS) ? NO_LINE : startLine,
+        (startLine == NOPOS) ? MoreTrees.NO_LINE : startLine,
         Breadcrumbs.describeTreePath(nodePath));
     return Joiner.on('\n').join(
         String.format("> Extra node in %s tree.", onExpected ? "expected" : "actual"),
@@ -145,12 +144,12 @@ final class TreeDifference {
     long expectedTreeStartLine = (expectedTreeContext == null)
         ? NOPOS : expectedTreeContext.getNodeStartLine(expectedNodePath.getLeaf());
     String expectedContextStr = String.format("Line %s %s",
-        (expectedTreeStartLine == NOPOS) ? NO_LINE : expectedTreeStartLine,
+        (expectedTreeStartLine == NOPOS) ? MoreTrees.NO_LINE : expectedTreeStartLine,
         Breadcrumbs.describeTreePath(expectedNodePath));
     long actualTreeStartLine = (actualTreeContext == null)
         ? NOPOS : actualTreeContext.getNodeStartLine(actualNodePath.getLeaf());
     String actualContextStr = String.format("Line %s %s",
-        (actualTreeStartLine == NOPOS) ? NO_LINE : actualTreeStartLine,
+        (actualTreeStartLine == NOPOS) ? MoreTrees.NO_LINE : actualTreeStartLine,
         Breadcrumbs.describeTreePath(actualNodePath));
     return Joiner.on('\n').join(
         "> Difference in expected tree and actual tree.",

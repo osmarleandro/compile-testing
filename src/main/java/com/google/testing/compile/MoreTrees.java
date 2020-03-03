@@ -47,6 +47,8 @@ import javax.tools.JavaFileManager;
 @SuppressWarnings("restriction") // Sun APIs usage intended
 final class MoreTrees {
 
+  static final String NO_LINE = "[unavailable]";
+
   /** Parses the source given into a {@link CompilationUnitTree}. */
   static CompilationUnitTree parseLinesToTree(String... source) {
     return parseLinesToTree(Arrays.asList(source));
