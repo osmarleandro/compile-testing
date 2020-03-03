@@ -83,27 +83,7 @@ public class ForwardingStandardJavaFileManager
     return fileManager.getLocation(location);
   }
 
-  // @Override for JDK 9 only
-  public void setLocationFromPaths(Location location, Collection<? extends Path> searchpath)
-      throws IOException {
-    Method setLocationFromPaths;
-    try {
-      setLocationFromPaths =
-          fileManager
-              .getClass()
-              .getMethod("setLocationFromPaths", Location.class, Collection.class);
-    } catch (ReflectiveOperationException e) {
-      // JDK < 9
-      return;
-    }
-    try {
-	  setLocationFromPaths.invoke(fileManager, location, searchpath);
-	} catch (ReflectiveOperationException e) {
-	  throw new LinkageError(e.getMessage(), e);
-	}
-  }
-
-private void extracted(Location location, Collection<? extends Path> searchpath, Method setLocationFromPaths)
+  private void extracted(Location location, Collection<? extends Path> searchpath, Method setLocationFromPaths)
 		throws LinkageError {
 	try {
       setLocationFromPaths.invoke(fileManager, location, searchpath);

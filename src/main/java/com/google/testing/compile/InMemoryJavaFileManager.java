@@ -30,8 +30,11 @@ import java.io.OutputStream;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.lang.reflect.Method;
 import java.net.URI;
 import java.nio.charset.Charset;
+import java.nio.file.Path;
+import java.util.Collection;
 import java.util.Map.Entry;
 import javax.tools.FileObject;
 import javax.tools.JavaFileObject;
@@ -124,7 +127,25 @@ private static URI uriForJavaFileObject(Location location, String className, Kin
     return ImmutableList.copyOf(inMemoryFileObjects.asMap().values());
   }
 
-  static final class InMemoryJavaFileObject extends SimpleJavaFileObject
+  public void setLocationFromPaths(Location location, Collection<? extends Path> searchpath) throws IOException {
+    Method setLocationFromPaths;
+    try {
+      setLocationFromPaths =
+          fileManager
+              .getClass()
+              .getMethod("setLocationFromPaths", Location.class, Collection.class);
+    } catch (ReflectiveOperationException e) {
+      // JDK < 9
+      return;
+    }
+    try {
+	  setLocationFromPaths.invoke(fileManager, location, searchpath);
+	} catch (ReflectiveOperationException e) {
+	  throw new LinkageError(e.getMessage(), e);
+	}
+  }
+
+static final class InMemoryJavaFileObject extends SimpleJavaFileObject
       implements JavaFileObject {
     private long lastModified = 0L;
     private Optional<ByteSource> data = Optional.absent();
