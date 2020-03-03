@@ -46,11 +46,6 @@ public class ForwardingStandardJavaFileManager
     super(fileManager);
   }
 
-  protected static URI uriForJavaFileObject(Location location, String className, JavaFileObject.Kind kind) {
-    return URI.create(
-        "mem:///" + location.getName() + '/' + className.replace('.', '/') + kind.extension);
-  }
-
   @Override
   public Iterable<? extends JavaFileObject> getJavaFileObjectsFromFiles(
       Iterable<? extends File> files) {
@@ -80,26 +75,6 @@ public class ForwardingStandardJavaFileManager
   @Override
   public Iterable<? extends File> getLocation(Location location) {
     return fileManager.getLocation(location);
-  }
-
-  // @Override for JDK 9 only
-  public void setLocationFromPaths(Location location, Collection<? extends Path> searchpath)
-      throws IOException {
-    Method setLocationFromPaths;
-    try {
-      setLocationFromPaths =
-          fileManager
-              .getClass()
-              .getMethod("setLocationFromPaths", Location.class, Collection.class);
-    } catch (ReflectiveOperationException e) {
-      // JDK < 9
-      return;
-    }
-    try {
-      setLocationFromPaths.invoke(fileManager, location, searchpath);
-    } catch (ReflectiveOperationException e) {
-      throw new LinkageError(e.getMessage(), e);
-    }
   }
 
 }
