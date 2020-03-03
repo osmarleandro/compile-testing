@@ -49,7 +49,7 @@ import javax.tools.StandardLocation;
  * @author Gregory Kick
  */
 // TODO(gak): under java 1.7 this could all be done with a PathFileManager
-final class InMemoryJavaFileManager extends ForwardingStandardJavaFileManager {
+final class InMemoryJavaFileManager extends SuperclassExtracted {
   protected final LoadingCache<URI, JavaFileObject> inMemoryFileObjects = CacheBuilder.newBuilder().build(new CacheLoader<URI, JavaFileObject>() {
 		        @Override
 		        public JavaFileObject load(URI key) {
