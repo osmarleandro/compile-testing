@@ -112,7 +112,7 @@ final class InMemoryJavaFileManager extends ForwardingStandardJavaFileManager {
     return inMemoryFileObjects.getUnchecked(uri);
   }
 
-  ImmutableList<JavaFileObject> getGeneratedSources() {
+  ImmutableList<JavaFileObject> getGeneratedSourcesRenamed() {
     ImmutableList.Builder<JavaFileObject> result = ImmutableList.builder();
     for (Entry<URI, JavaFileObject> entry : inMemoryFileObjects.asMap().entrySet()) {
       if (entry.getKey().getPath().startsWith("/" + StandardLocation.SOURCE_OUTPUT.name())
