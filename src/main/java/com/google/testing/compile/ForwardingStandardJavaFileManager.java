@@ -46,6 +46,11 @@ public class ForwardingStandardJavaFileManager
     super(fileManager);
   }
 
+  protected static URI uriForJavaFileObject(Location location, String className, JavaFileObject.Kind kind) {
+    return URI.create(
+        "mem:///" + location.getName() + '/' + className.replace('.', '/') + kind.extension);
+  }
+
   @Override
   public Iterable<? extends JavaFileObject> getJavaFileObjectsFromFiles(
       Iterable<? extends File> files) {

@@ -60,11 +60,6 @@ final class InMemoryJavaFileManager extends ForwardingStandardJavaFileManager {
     super(fileManager);
   }
 
-  private static URI uriForJavaFileObject(Location location, String className, Kind kind) {
-    return URI.create(
-        "mem:///" + location.getName() + '/' + className.replace('.', '/') + kind.extension);
-  }
-
   @Override
   public boolean isSameFile(FileObject a, FileObject b) {
     /* This check is less strict than what is typically done by the normal compiler file managers
