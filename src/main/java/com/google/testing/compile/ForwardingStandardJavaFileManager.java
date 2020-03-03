@@ -19,6 +19,7 @@ package com.google.testing.compile;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.net.URI;
 import java.nio.file.Path;
 import java.util.Collection;
 import javax.tools.ForwardingJavaFileManager;
@@ -33,7 +34,16 @@ import javax.tools.StandardJavaFileManager;
 public class ForwardingStandardJavaFileManager
     extends ForwardingJavaFileManager<StandardJavaFileManager> implements StandardJavaFileManager {
 
-  /**
+  protected static URI uriForFileObject(Location location, String packageName, String relativeName) {
+	    StringBuilder uri = new StringBuilder("mem:///").append(location.getName()).append('/');
+	    if (!packageName.isEmpty()) {
+	      uri.append(packageName.replace('.', '/')).append('/');
+	    }
+	    uri.append(relativeName);
+	    return URI.create(uri.toString());
+	  }
+
+/**
    * Creates a new instance of ForwardingStandardJavaFileManager.
    *
    * @param fileManager delegate to this file manager

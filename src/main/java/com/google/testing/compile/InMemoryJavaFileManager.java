@@ -58,15 +58,6 @@ InMemoryJavaFileManager(StandardJavaFileManager fileManager) {
     super(fileManager);
   }
 
-  private static URI uriForFileObject(Location location, String packageName, String relativeName) {
-    StringBuilder uri = new StringBuilder("mem:///").append(location.getName()).append('/');
-    if (!packageName.isEmpty()) {
-      uri.append(packageName.replace('.', '/')).append('/');
-    }
-    uri.append(relativeName);
-    return URI.create(uri.toString());
-  }
-
   /**
  * @deprecated Use {@link MoreTrees#uriForJavaFileObject(Location,String,Kind)} instead
  */
