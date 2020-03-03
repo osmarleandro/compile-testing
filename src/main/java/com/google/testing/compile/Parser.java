@@ -53,7 +53,7 @@ public final class Parser {
   static ParseResult parse(Iterable<? extends JavaFileObject> sources) {
     JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
     DiagnosticCollector<JavaFileObject> diagnosticCollector = new DiagnosticCollector<>();
-    InMemoryJavaFileManager fileManager =
+    ForwardingStandardJavaFileManager fileManager =
         new InMemoryJavaFileManager(
             compiler.getStandardFileManager(diagnosticCollector, Locale.getDefault(), UTF_8));
     JavacTask task =

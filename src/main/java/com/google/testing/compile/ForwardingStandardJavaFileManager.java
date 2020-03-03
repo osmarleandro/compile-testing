@@ -19,12 +19,18 @@ package com.google.testing.compile;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.net.URI;
 import java.nio.file.Path;
 import java.util.Collection;
 import javax.tools.ForwardingJavaFileManager;
 import javax.tools.JavaFileManager.Location;
 import javax.tools.JavaFileObject;
 import javax.tools.StandardJavaFileManager;
+
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
+import com.google.testing.compile.InMemoryJavaFileManager.InMemoryJavaFileObject;
 
 /**
  * Forwards calls to a given {@link StandardJavaFileManager}. Subclasses of this class might
@@ -33,7 +39,14 @@ import javax.tools.StandardJavaFileManager;
 public class ForwardingStandardJavaFileManager
     extends ForwardingJavaFileManager<StandardJavaFileManager> implements StandardJavaFileManager {
 
-  /**
+  protected final LoadingCache<URI, JavaFileObject> inMemoryFileObjects = CacheBuilder.newBuilder().build(new CacheLoader<URI, JavaFileObject>() {
+	        @Override
+	        public JavaFileObject load(URI key) {
+	          return new InMemoryJavaFileObject(key);
+	        }
+	      });
+
+/**
    * Creates a new instance of ForwardingStandardJavaFileManager.
    *
    * @param fileManager delegate to this file manager
