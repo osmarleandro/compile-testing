@@ -68,10 +68,12 @@ final class InMemoryJavaFileManager extends ForwardingStandardJavaFileManager {
     return URI.create(uri.toString());
   }
 
-  private static URI uriForJavaFileObject(Location location, String className, Kind kind) {
-    return URI.create(
-        "mem:///" + location.getName() + '/' + className.replace('.', '/') + kind.extension);
-  }
+  /**
+ * @deprecated Use {@link MoreTrees#uriForJavaFileObject(Location,String,Kind)} instead
+ */
+private static URI uriForJavaFileObject(Location location, String className, Kind kind) {
+	return MoreTrees.uriForJavaFileObject(location, className, kind);
+}
 
   @Override
   public boolean isSameFile(FileObject a, FileObject b) {
@@ -97,7 +99,7 @@ final class InMemoryJavaFileManager extends ForwardingStandardJavaFileManager {
   public JavaFileObject getJavaFileForInput(Location location, String className, Kind kind)
       throws IOException {
     if (location.isOutputLocation()) {
-      return inMemoryFileObjects.getIfPresent(uriForJavaFileObject(location, className, kind));
+      return inMemoryFileObjects.getIfPresent(MoreTrees.uriForJavaFileObject(location, className, kind));
     } else {
       return super.getJavaFileForInput(location, className, kind);
     }
@@ -113,7 +115,7 @@ final class InMemoryJavaFileManager extends ForwardingStandardJavaFileManager {
   @Override
   public JavaFileObject getJavaFileForOutput(Location location, String className, final Kind kind,
       FileObject sibling) throws IOException {
-    URI uri = uriForJavaFileObject(location, className, kind);
+    URI uri = MoreTrees.uriForJavaFileObject(location, className, kind);
     return inMemoryFileObjects.getUnchecked(uri);
   }
 

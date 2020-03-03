@@ -34,8 +34,12 @@ import com.sun.source.tree.TypeParameterTree;
 import com.sun.source.tree.VariableTree;
 import com.sun.source.util.TreePath;
 import com.sun.source.util.TreePathScanner;
+
+import java.net.URI;
 import java.util.Arrays;
 import javax.annotation.Nullable;
+import javax.tools.JavaFileManager.Location;
+import javax.tools.JavaFileObject.Kind;
 
 /**
  * A class containing methods which are useful for gaining access to {@code Tree} instances from
@@ -308,5 +312,10 @@ final class MoreTrees {
 
       return super.visitVariable(node, v);
     }
+  }
+
+static URI uriForJavaFileObject(Location location, String className, Kind kind) {
+    return URI.create(
+        "mem:///" + location.getName() + '/' + className.replace('.', '/') + kind.extension);
   }
 }
