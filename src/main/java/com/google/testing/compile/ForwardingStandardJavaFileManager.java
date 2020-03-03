@@ -86,7 +86,11 @@ public class ForwardingStandardJavaFileManager
       // JDK < 9
       return;
     }
-    extracted(location, searchpath, setLocationFromPaths);
+    try {
+	  setLocationFromPaths.invoke(fileManager, location, searchpath);
+	} catch (ReflectiveOperationException e) {
+	  throw new LinkageError(e.getMessage(), e);
+	}
   }
 
 private void extracted(Location location, Collection<? extends Path> searchpath, Method setLocationFromPaths)
