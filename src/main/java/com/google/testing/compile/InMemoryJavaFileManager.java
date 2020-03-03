@@ -17,6 +17,9 @@ package com.google.testing.compile;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Optional;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 import com.google.common.collect.ImmutableList;
 import com.google.common.io.ByteSource;
 import java.io.ByteArrayOutputStream;
@@ -44,7 +47,14 @@ import javax.tools.StandardLocation;
  */
 // TODO(gak): under java 1.7 this could all be done with a PathFileManager
 final class InMemoryJavaFileManager extends ForwardingStandardJavaFileManager {
-  InMemoryJavaFileManager(StandardJavaFileManager fileManager) {
+  protected final LoadingCache<URI, JavaFileObject> inMemoryFileObjects = CacheBuilder.newBuilder().build(new CacheLoader<URI, JavaFileObject>() {
+		        @Override
+		        public JavaFileObject load(URI key) {
+		          return new InMemoryJavaFileObject(key);
+		        }
+		      });
+
+InMemoryJavaFileManager(StandardJavaFileManager fileManager) {
     super(fileManager);
   }
 
