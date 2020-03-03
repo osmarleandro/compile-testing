@@ -59,15 +59,6 @@ final class InMemoryJavaFileManager extends ForwardingStandardJavaFileManager {
     super(fileManager);
   }
 
-  private static URI uriForFileObject(Location location, String packageName, String relativeName) {
-    StringBuilder uri = new StringBuilder("mem:///").append(location.getName()).append('/');
-    if (!packageName.isEmpty()) {
-      uri.append(packageName.replace('.', '/')).append('/');
-    }
-    uri.append(relativeName);
-    return URI.create(uri.toString());
-  }
-
   private static URI uriForJavaFileObject(Location location, String className, Kind kind) {
     return URI.create(
         "mem:///" + location.getName() + '/' + className.replace('.', '/') + kind.extension);
@@ -87,7 +78,7 @@ final class InMemoryJavaFileManager extends ForwardingStandardJavaFileManager {
       String relativeName) throws IOException {
     if (location.isOutputLocation()) {
       return inMemoryFileObjects.getIfPresent(
-          uriForFileObject(location, packageName, relativeName));
+          MoreTrees.uriForFileObject(location, packageName, relativeName));
     } else {
       return super.getFileForInput(location, packageName, relativeName);
     }
@@ -106,7 +97,7 @@ final class InMemoryJavaFileManager extends ForwardingStandardJavaFileManager {
   @Override
   public FileObject getFileForOutput(Location location, String packageName,
       String relativeName, FileObject sibling) throws IOException {
-    URI uri = uriForFileObject(location, packageName, relativeName);
+    URI uri = MoreTrees.uriForFileObject(location, packageName, relativeName);
     return inMemoryFileObjects.getUnchecked(uri);
   }
 
