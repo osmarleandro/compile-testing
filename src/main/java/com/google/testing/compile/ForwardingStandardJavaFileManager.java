@@ -37,14 +37,6 @@ import javax.tools.StandardJavaFileManager;
 public class ForwardingStandardJavaFileManager
     extends ForwardingJavaFileManager<StandardJavaFileManager> implements StandardJavaFileManager {
 
-  protected final LoadingCache<URI, JavaFileObject> inMemoryFileObjects =
-      CacheBuilder.newBuilder().build(new CacheLoader<URI, JavaFileObject>() {
-        @Override
-        public JavaFileObject load(URI key) {
-          return new InMemoryJavaFileManager.InMemoryJavaFileObject(key);
-        }
-      });
-
   /**
    * Creates a new instance of ForwardingStandardJavaFileManager.
    *
