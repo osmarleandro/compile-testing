@@ -318,4 +318,6 @@ static URI uriForJavaFileObject(Location location, String className, Kind kind) 
     return URI.create(
         "mem:///" + location.getName() + '/' + className.replace('.', '/') + kind.extension);
   }
+
+static final String NO_LINE = "[unavailable]";
 }
