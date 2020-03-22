@@ -36,6 +36,7 @@ import com.google.common.io.ByteSource;
 import com.google.common.truth.FailureMetadata;
 import com.google.common.truth.Subject;
 import com.google.errorprone.annotations.CanIgnoreReturnValue;
+import com.google.testing.ProcessedCompileTesterFactory;
 import com.google.testing.compile.CompilationSubject.DiagnosticAtColumn;
 import com.google.testing.compile.CompilationSubject.DiagnosticInFile;
 import com.google.testing.compile.CompilationSubject.DiagnosticOnLine;

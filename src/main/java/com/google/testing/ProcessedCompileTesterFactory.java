@@ -13,7 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.google.testing.compile;
+package com.google.testing;
+
+import com.google.testing.compile.CompileTester;
 
 import java.io.File;
 import javax.annotation.CheckReturnValue;
