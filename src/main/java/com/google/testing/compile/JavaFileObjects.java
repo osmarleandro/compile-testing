@@ -46,7 +46,7 @@ import javax.tools.SimpleJavaFileObject;
  *
  * @author Gregory Kick
  */
-public final class JavaFileObjects {
+public final class JavaFileObjects implements ExtractedInterface {
   private JavaFileObjects() { }
 
   /**
