@@ -131,7 +131,7 @@ private static final String NO_LINE = MoreTrees.NO_LINE;
         ? NOPOS : treeContext.getNodeStartLine(nodePath.getLeaf());
     String contextStr = String.format("Line %s %s",
         (startLine == NOPOS) ? MoreTrees.NO_LINE : startLine,
-        Breadcrumbs.describeTreePath(nodePath));
+        BreadcrumbsRenamed.describeTreePath(nodePath));
     return Joiner.on('\n').join(
         String.format("> Extra node in %s tree.", onExpected ? "expected" : "actual"),
         String.format("  %s", contextStr),
@@ -149,12 +149,12 @@ private static final String NO_LINE = MoreTrees.NO_LINE;
         ? NOPOS : expectedTreeContext.getNodeStartLine(expectedNodePath.getLeaf());
     String expectedContextStr = String.format("Line %s %s",
         (expectedTreeStartLine == NOPOS) ? MoreTrees.NO_LINE : expectedTreeStartLine,
-        Breadcrumbs.describeTreePath(expectedNodePath));
+        BreadcrumbsRenamed.describeTreePath(expectedNodePath));
     long actualTreeStartLine = (actualTreeContext == null)
         ? NOPOS : actualTreeContext.getNodeStartLine(actualNodePath.getLeaf());
     String actualContextStr = String.format("Line %s %s",
         (actualTreeStartLine == NOPOS) ? MoreTrees.NO_LINE : actualTreeStartLine,
-        Breadcrumbs.describeTreePath(actualNodePath));
+        BreadcrumbsRenamed.describeTreePath(actualNodePath));
     return Joiner.on('\n').join(
         "> Difference in expected tree and actual tree.",
         String.format("  Expected node: %s", expectedContextStr),
