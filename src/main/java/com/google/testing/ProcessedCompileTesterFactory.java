@@ -13,11 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.google.testing.compile;
+package com.google.testing;
 
 import java.io.File;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.processing.Processor;
+
+import com.google.testing.compile.CompileTester;
 
 /**
  * Creates {@link CompileTester} instances that test compilation with provided {@link Processor}
