@@ -17,7 +17,7 @@ package com.google.testing.compile;
 
 import static com.google.common.truth.Truth.assertThat;
 
-import com.google.testing.compile.Breadcrumbs.BreadcrumbVisitor;
+import com.google.testing.compile.BreadcrumbsRenamed.BreadcrumbVisitor;
 
 import com.sun.source.tree.ClassTree;
 import com.sun.source.tree.CompilationUnitTree;
@@ -37,14 +37,14 @@ import org.junit.runners.JUnit4;
  * A test for {@link BreadcrumbVisitor}
  */
 @RunWith(JUnit4.class)
-public class BreadcrumbsTest {
+public class BreadcrumbsRenamedTest {
   @Rule public final ExpectedException expectedExn = ExpectedException.none();
-  private static final Breadcrumbs.BreadcrumbVisitor BREADCRUMBS =
-      new Breadcrumbs.BreadcrumbVisitor();
+  private static final BreadcrumbsRenamed.BreadcrumbVisitor BREADCRUMBS =
+      new BreadcrumbsRenamed.BreadcrumbVisitor();
 
   @Test
   public void describeTreePath() {
-    assertThat(Breadcrumbs.describeTreePath(treePath()))
+    assertThat(BreadcrumbsRenamed.describeTreePath(treePath()))
         .contains(classTree().getSimpleName().toString());
   }
 

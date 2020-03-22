@@ -44,9 +44,9 @@ import java.util.List;
  *
  * @author Stephen Pratt
  */
-final class Breadcrumbs {
+final class BreadcrumbsRenamed {
   private static final BreadcrumbVisitor BREADCRUMB_VISITOR = new BreadcrumbVisitor();
-  private Breadcrumbs() {}
+  private BreadcrumbsRenamed() {}
 
   /**
    * Returns a string describing the {@link TreePath} given.
